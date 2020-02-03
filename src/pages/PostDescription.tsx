@@ -14,7 +14,8 @@ export interface IState {
   id: number;
   post: any;
   user: any;
-  isLoading: Boolean;
+  isUserLoading: Boolean;
+  isPostLoading: Boolean;
 }
 
 /**
@@ -34,16 +35,17 @@ class PostDescription extends React.Component<
         company: {},
         address: {}
       },
-      isLoading: false
+      isPostLoading: false,
+      isUserLoading: false
     };
   }
 
   public componentDidMount(): void {
-    this.setState({ isLoading: true });
+    this.setState({ isPostLoading: true, isUserLoading: true });
     axios
       .get(`https://jsonplaceholder.typicode.com/posts/${this.state.id}`)
       .then(data => {
-        this.setState({ post: data.data });
+        this.setState({ post: data.data, isPostLoading: false });
 
         return axios.get(
           `https://jsonplaceholder.typicode.com/users/${this.state.post.userId}`
@@ -52,25 +54,25 @@ class PostDescription extends React.Component<
       .then(data => {
         this.setState({
           user: data.data,
-          isLoading: false
+          isUserLoading: false
         });
       });
   }
 
   public render() {
-    const { post, user, isLoading } = this.state;
+    const { post, user, isPostLoading, isUserLoading } = this.state;
     return (
       <div>
         <div className="row">
           <div className="col-md-8">
-            <PostDetailCard post={post} isLoading={isLoading} />
+            <PostDetailCard post={post} isLoading={isPostLoading} />
           </div>
           <div className="col-md-4">
             <UserProfileCard
               bgCover={bgCover}
               userAvatar={userImage}
               user={user}
-              isLoading={isLoading}
+              isLoading={isUserLoading}
             />
           </div>
         </div>

@@ -12,7 +12,7 @@ const PostList = ({ posts, isLoading }: IProps) => {
   if (isLoading) {
     return (
       <div>
-        <Card title="Posts">
+        <Card title="Loading...">
           <Loader />
         </Card>
       </div>

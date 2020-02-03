@@ -13,7 +13,7 @@ const userProfileCard = ({ bgCover, userAvatar, user, isLoading }: IProps) => {
   if (isLoading) {
     return (
       <div>
-        <Card title="Posts">
+        <Card title="Loading...">
           <Loader />
         </Card>
       </div>
